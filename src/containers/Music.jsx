@@ -1,16 +1,14 @@
-import React, { useState } from 'react'
-import styles from './Music.module.css'
-
-import SearchMusic from '../components/SearchMusic/SearchMusic';
-import TrackList from '../components/TrackList/TrackList';
-
+import React, { useState } from "react";
+import styles from "./Music.module.css";
+import SearchMusic from "../components/SearchMusic/SearchMusic";
+import TrackList from "../components/TrackList/TrackList";
 
 const Music = () => {
   const [fetchingProcess, setFetchingProcess] = useState(null);
   const [searchFieldState, setSearchFieldState] = useState("");
   const [expandedTrack, setExpandedTrack] = useState(null);
   const [tracks, setTracks] = useState([]);
-  const [fetchingTracks, setFetchingTracks] = useState();
+  const [, setFetchingTracks] = useState();
 
   const submitSearchHandler = (event) => {
     event.preventDefault();
@@ -30,7 +28,8 @@ const Music = () => {
       .then(
         (data) => setTracks(data.results),
         setFetchingTracks(false),
-        setExpandedTrack(null)
+        setExpandedTrack(null),
+        setFetchingProcess(false)
       )
       .catch(() => alert("Something went wrong!"));
   };
@@ -39,13 +38,10 @@ const Music = () => {
     setSearchFieldState(newSearchState);
   };
 
-  const expandTrackHandler = (expandedTrack) => {
-    
-    if (expandedTrack === setExpandedTrack) {
-      setExpandedTrack(null);
-    } else {
-      setTimeout(() => setExpandedTrack(expandedTrack), 0);//error
-    }
+  const expandTrackHandler = (expandedTrackIndex) => {
+    setExpandedTrack(
+      expandedTrack === expandedTrackIndex ? null : expandedTrackIndex
+    );
   };
 
   return (
@@ -64,6 +60,3 @@ const Music = () => {
 };
 
 export default Music;
-
-
-
